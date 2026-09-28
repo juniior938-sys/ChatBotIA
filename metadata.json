@@ -1,0 +1,6 @@
+{
+  "name": "Weyn AI",
+  "description": "IA Chat sem censura para análise e resumo de documentos complexos, PDFs e tabelas.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
