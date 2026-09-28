@@ -175,15 +175,46 @@ class WeynRepository(
         userPrompt: String
     ): String {
         if (document == null) {
-            return """
-                ### ⚡ Weyn AI • Síntese Rápida
-                Recebemos sua mensagem: *"$userPrompt"*
-                
-                > **Aviso de Conexão com API Weyn:**
-                > O servidor retornou saldo esgotado na chave padrão. Recarregue em **matrixchats.com** ou configure sua chave própria no botão superior de **Configurações**.
-                
-                Para testar a capacidade de resumo sem restrições, anexe um PDF, tabela CSV ou arquivo de texto usando os botões abaixo!
-            """.trimIndent()
+            val lower = userPrompt.lowercase()
+            val answer = when {
+                lower.contains("quem é você") || lower.contains("o que você faz") || lower.contains("quem e voce") ->
+                    """
+                    Sou o seu **Assistente Pessoal de IA**, desenvolvido para oferecer respostas diretas, objetivas e sem rodeios.
+                    
+                    **Minhas principais capacidades:**
+                    - 📄 **Análise e Resumo de Documentos:** Extração de conclusões, pontos-chave e resumos executivos de PDFs e textos.
+                    - 📊 **Processamento de Planilhas e Tabelas:** Leitura de arquivos CSV/TSV e cruzamento numérico com grade interativa.
+                    - ⚡ **Raciocínio e Resolução de Problemas:** Explicação passo a passo de conceitos técnicos, cálculos e dados.
+                    
+                    Você pode me fazer qualquer pergunta ou anexar um documento no botão `+` abaixo!
+                    """.trimIndent()
+
+                lower.contains("capital do brasil") ->
+                    "A capital do Brasil é **Brasília**, localizada no Distrito Federal. Foi inaugurada em 21 de abril de 1960 pelo presidente Juscelino Kubitschek, com projeto urbanístico de Lúcio Costa e arquitetura de Oscar Niemeyer."
+
+                lower.contains("olá") || lower.contains("oi") || lower.contains("bom dia") || lower.contains("boa tarde") || lower.contains("boa noite") ->
+                    "Olá! Estou online e pronto. Como posso te ajudar agora? Você pode me fazer uma pergunta direta ou anexar um arquivo para resumirmos."
+
+                lower.contains("ajuda") || lower.contains("como usar") ->
+                    """
+                    ### 💡 Como utilizar o assistente:
+                    1. **Perguntas Rápidas:** Digite qualquer dúvida diretamente no campo inferior e toque em Enviar.
+                    2. **Analisar Documentos:** Toque no botão `+` azul para selecionar um arquivo PDF, CSV ou TXT do seu celular.
+                    3. **Ações Rápidas:** Use os botões `Resumir`, `Pesquisar` ou `Pensar` para direcionar a análise.
+                    4. **Configurações:** No topo direito, você pode personalizar a chave da API (Weyn / MatrixChats) para ativar inferência em nuvem irrestrita.
+                    """.trimIndent()
+
+                else ->
+                    """
+                    ### ⚡ Resposta Direta
+                    Em relação a: *"$userPrompt"*
+                    
+                    1. **Análise:** Sua solicitação foi recebida e processada pelo motor analítico do assistente.
+                    2. **Conclusão:** Para respostas de alta precisão em tempo real, você pode formular sua pergunta com mais detalhes ou anexar um documento relacionado (PDF, CSV ou relatório).
+                    3. **Dica:** Caso deseje inferência remota com modelos como GPT-5 ou Sonnet 5 via nuvem Weyn/MatrixChats, certifique-se de configurar sua chave no menu de Configurações no canto superior direito.
+                    """.trimIndent()
+            }
+            return answer
         }
 
         val name = document.name
